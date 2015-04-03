@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+    th  {
+        color: #ffffff;
+        background-color: #444488;
+    }
+    tr.odd  {
+        color: #000000;
+        background-color: #e8e8f0;
+    }
+    tr.even {
+        color: #000000;
+        background-color: #f8f8f8;
+    }
+    td.title{
+        color: #ffffff;
+        background-color: #000088;
+    }
+  </style>
+<title>INDEX</title>
+</head>
+  <body>
+    <!-- NEW -->
+    <table cellspacing=1>
+        <tr>
+            <td class="title" colspan=3>新規登録</td>
+        </tr>
+        <tr>
+            <th>件名</th>
+            <th>本文</th>
+            <th>登録</th>
+        </tr>
+        <tr>
+            <form method="post" action="new">
+            <td><input type="text" name="title"></td>
+            <td><input type="text" name="message"></td>
+            <td><input type="submit" value="INSERT"><td>
+            </form>
+        </tr>
+    </table>
+
+    <!-- EDIT -->
+    <table cellspacing=1>
+        <tr>
+            <td class="title" colspan=7>編集</td>
+        </tr>
+        <tr>
+            <th>id</th>
+            <th>件名</th>
+            <th>本文</th>
+            <th>登録</th>
+            <th>編集日</th>
+            <th>削除</th>
+        </tr>
+        {%- for log in data -%}
+        <tr class="{{ loop.cycle('odd', 'even') }}">
+            <form action="update/{{log.id}}" method="post">
+            <td><a href="del/{{log.id}}">{{log.id}}</a></td>
+            <td><input type="text"  name="title"   value="{{log.title}}"></td>
+            <td><input type="text"  name="message" value="{{log.message}}"></td>
+            <td><input type="submit" value="UPDATE"></td>
+            <td>{{log.date}}</td>
+            <td><a href="del/{{log.id}}">削除</a></td>
+            </form>
+        </tr>
+        {%- endfor -%}
+    </table>
+
+    <!-- EDIT -->
+    <table cellspacing=1>
+        <tr>
+            <td class="title" colspan=7>静的URL生成</td>
+        </tr>
+        <tr>
+            <th>項目</th>
+            <th>値</th>
+        </tr>
+        {%- for key, value in static|dictsort -%}
+        <tr class="{{ loop.cycle('odd', 'even') }}">
+        <td>{{key}}</td><td><a href="{{value}}">{{value}}</td>
+        </tr>
+        {%- endfor -%}
+    </table>
+    </div>
+  </body>
+</html>
